@@ -1,7 +1,7 @@
 exec sp_msforeachdb 'USE ?; SELECT DB_NAME(db_id()) DatabaseName, OBJECT_NAME(ind.OBJECT_ID) AS TableName, I.rows as [ROWCOUNT],
 ind.name AS IndexName, indexstats.index_type_desc AS IndexType,
-indexstats.avg_fragmentation_in_percent, indexstats.avg_fragment_size_in_pages, indexstats.page_count
-FROM sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, NULL) indexstats
+indexstats.avg_fragmentation_in_percent, indexstats.avg_page_space_used_in_percent, indexstats.avg_fragment_size_in_pages
+FROM sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, ''DETAILED'') indexstats
 INNER JOIN sys.indexes ind
 ON ind.object_id = indexstats.object_id
 INNER JOIN
